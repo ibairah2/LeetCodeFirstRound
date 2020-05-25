@@ -64,7 +64,6 @@ class Solution {
             this.left = left;
             this.right = right;
         }
-
     }
     public int pathSum(TreeNode root, int sum) {
         return 0;
