@@ -34,13 +34,47 @@ import java.io.InputStreamReader;
  */
 
 class Solution {
+    //理解
+    public int rob6(int[] num) {
+        int rob = 0; //max monney can get if rob current house
+        int notrob = 0; //max money can get if not rob current house
+        for(int i=0; i<num.length; i++) {
+            int currob = notrob + num[i]; //if rob current value, previous house must not be robbed
+            notrob = Math.max(notrob, rob); //if not rob ith house, take the max value of robbed (i-1)th house and not rob (i-1)th house
+            rob = currob;
+        }
+        return Math.max(rob, notrob);
+    }
+
+    // Dp 更好理解的办法
+
+    public int robez(int[] nums) {
+        if(nums.length==0) return 0;
+        if(nums.length==1) return nums[0];
+
+        //Initialize an arrays to store the money
+        int[] mark = new int[nums.length];
+
+        //We can infer the formula from problem:mark[i]=max(num[i]+mark[i-2],mark[i-1])
+        //so initialize two nums at first.
+        mark[0] = nums[0];
+        mark[1] = Math.max(nums[0], nums[1]); //从开始两个选择较大一个数
+
+        for(int i=2;i<nums.length;i++){
+            // 本题的情况， 对比如果我这次rob那我再 + 上上次rob的钱，是否比我
+            // 上一次rob钱更多，i=2,nums[i] = 5->> 1, 10, 5 ->>  5 + 1 < 10
+            mark[i] = Math.max(nums[i]+mark[i-2], mark[i-1]);
+        }
+        return mark[nums.length-1];
+    }
+
 
     //DP
     //Time: O(n) Space:O(1)
     public int rob(int[] nums) {
         int[] dp = new int[nums.length+1];
         dp[0] = 0;
-        dp[1] = nums[1];
+        dp[1] = nums[0];
 
         for (int i = 1; i < nums.length; i++) {
             dp[i+1] = Math.max(dp[i]+dp[i-1], dp[i]);
@@ -49,12 +83,20 @@ class Solution {
         return dp[nums.length]; // dp最后一位则是最大和
     }
 
+
+
     // 使用recursive
     //我当前房子+我上一个隔开的房子（i-2）的钱  VS  我上一个房子钱（i-1）
     //哪一个大则选择哪一个
     //Time: O(n) Space:O(n)
-    public int rob2(int[] nums) {
-        return 0;
+    public int robrc(int[] nums) {
+        return robrc(nums, nums.length - 1);
+    }
+    private int robrc(int[] nums, int i) {
+        if (i < 0) {
+            return 0;
+        }
+        return Math.max(robrc(nums, i - 2) + nums[i], robrc(nums, i - 1));
     }
 
     //迭代方法 类似DP
