@@ -78,7 +78,7 @@ class Solution {
         char pre = 0;
         int res = 0;
         for(int i = 0; i < s.length(); i++){
-            res += values.get(s.charAt(i));
+            res += values.get(s.charAt(i)); // 先加上所有的值
             //如果pre存在， 同时是ab  pattern， a < b
             if(pre != 0 && (values.get(s.charAt(i))> values.get(pre))){
                 System.out.println("in if  :" );
@@ -117,6 +117,32 @@ class Solution {
 
         return sum;
 
+    }
+}
+
+class Solution13{
+    public int romanToInt(String s) {
+        HashMap<Character,Integer> values = new HashMap<Character,Integer>();
+        values.put('I',1);
+        values.put('V',5);
+        values.put('X',10);
+        values.put('L',50);
+        values.put('C',100);
+        values.put('D',500);
+        values.put('M',1000);
+
+        char pre = 0;
+        int res = 0;
+
+        for(int i = 0; i< s.length();i++){
+            res += values.get(s.charAt(i));
+            if(pre != 0 && values.get(s.charAt(i)) > values.get(pre)){
+                res -= values.get(pre) * 2;
+            }
+            pre = s.charAt(i);
+        }
+
+        return res;
     }
 }
 

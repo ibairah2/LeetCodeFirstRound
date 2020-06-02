@@ -52,9 +52,8 @@ class Solution {
         String prefix = strs[0]; //设置第一个string为prefix
 
         for(int i=1; i< strs.length;i++){
-            System.out.println(" strs.length :"+ strs.length);
             //看上放IndexOf用法，如果indexof等于0，说明完全一致
-            while(strs[i].indexOf(prefix) != 0){
+            while(strs[i].indexOf(prefix) != 0){  //注意是strs[i]不是strs
                 // prefix每一次不断减少最后一个字母
                 prefix = prefix.substring(0,prefix.length()-1);
             }
@@ -95,7 +94,36 @@ class Solution {
         return res;
     }
 }
+class Solution14{
+// 最长公共前缀
+//方法2 ， 设置第一个string为prefix，然后和下一个每一个对比
+    public String longestCommonPrefix(String[] strs) {
+        String prefix = strs[0];
+        for(int i=1; i<strs.length; i++){
+        while(strs[i].indexOf(prefix) != 0){
+         prefix = prefix.substring(0,prefix.length()-1);
+       }
+    }
+        return prefix;
+    }
 
+
+    public String longestCommonPrefixBruteForce(String[] strs) {
+        if(strs.length == 0 || strs == null) return "";
+        String res = "";
+
+        for(int i=0; i<strs[0].length(); i++){
+            char c = strs[0].charAt(i);
+            for(int j=1; j<strs.length; j++){
+                if(i > strs[j].length() || c != strs[j].charAt(i)){
+                    return res;
+                }
+            }
+            res += Character.toString(c);
+        }
+        return res;
+    }
+}
 public class MainClass {
     public static void main(String[] args) {
         String[] st = {"aa","a"};
