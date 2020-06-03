@@ -85,6 +85,7 @@ class Solution {
             return 0;
         }
 
+
         //2. Handle sign
         int sign = 1;
         if(str.charAt(index) == '+' || str.charAt(index) == '-'){
