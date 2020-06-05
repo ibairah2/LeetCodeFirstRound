@@ -133,12 +133,68 @@ class Solution {
 }
 
 
+class Solution2{
+    public int[] searchRange(int[] nums, int target) {
+        int[] res = {-1,-1};
+        if(nums == null || nums.length == 0) return res;
+        res[0] = findStart(nums,target);
+        res[1] = findEnd(nums,target);
+        System.out.println(" res :"+ Arrays.toString(res));
+        return res;
+    }
+
+    public int findStart(int[] nums, int target){
+        int res = -1;
+
+        // binary search
+        int start = 0;
+        int end = nums.length-1;
+
+
+        while(start + 1 < end){
+            int mid = start + (end - start)/2 ;// overflow
+            if(target <= nums[mid]){
+                end = mid;
+            }else{
+                start = mid;
+            }
+        }
+        if(nums[start] == target) res = start;
+        if(nums[end] == target) res = end;
+        //
+        return res;
+    }
+
+    public int findEnd(int[] nums, int target){
+        // binary search
+        int start = 0, end = nums.length-1,res = -1 ;
+
+        while(start + 1 < end){
+            System.out.println("in while");
+            int mid = start + (end - start)/2 ; // overflow
+            if(nums[mid] > target){
+                end = mid;
+            }else{
+                start = mid;
+            }
+        }
+
+        if(nums[end] == target) res = end;
+        else if(nums[start] == target) res = start;
+        //
+        return res;
+    }
+}
+
 public class MainClass {
     public static void main(String[] args) {
         //nums = [5,7,7,8,8,10], target = 8
         int[] nums = {5,7,7,8,8,10};
         int target = 8;
-        Solution solution = new Solution();
-        solution.searchRange(nums,target);
+     //   Solution solution = new Solution();
+     //   solution.searchRange(nums,target);
+
+        Solution2 solution2 = new Solution2();
+        solution2.searchRange(nums,target);
     }
 }
