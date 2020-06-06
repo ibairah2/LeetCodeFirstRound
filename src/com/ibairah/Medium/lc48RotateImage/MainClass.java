@@ -45,6 +45,14 @@ package com.ibairah.Medium.lc48RotateImage;
  *   [16, 7,10,11]
  * ]
  */
+
+class Solution {
+    public void rotate(int[][] matrix) {
+
+    }
+}
+
+
 public class MainClass {
 
 }
