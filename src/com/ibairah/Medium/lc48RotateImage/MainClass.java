@@ -48,10 +48,36 @@ package com.ibairah.Medium.lc48RotateImage;
 
 class Solution {
     public void rotate(int[][] matrix) {
+        int top = 0;
+        int bot = matrix.length-1;
+        int start = 0;
+        int end  = matrix.length-1;
 
+        // create number of cells one line
+        int n = matrix.length;
+
+        /*[
+          [1,2,3],
+          [4,5,6],
+          [7,8,9]
+        ]*/
+
+        while( n > 1){
+            for( int i = 0; i< n-1; i++){
+                int temp = matrix[top][start+i]; // 第一行说的值： 1，2；
+                matrix[top][start+i] = matrix[bot-i][start]; // 7,4 对应 1，2 转换过去
+                matrix[bot-i][start] = matrix[bot][end-i];
+                matrix[bot][end-i] = matrix[top+i][end];
+                matrix[top+i][end] = temp;
+            }
+            top++;
+            bot--;
+            start++;
+            end--;
+            n -= 2;
+        }
     }
 }
-
 
 public class MainClass {
 
