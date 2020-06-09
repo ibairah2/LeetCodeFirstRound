@@ -1,4 +1,4 @@
-package com.ibairah.Medium.lc59GroupAnagrams;
+package com.ibairah.Medium.lc49GroupAnagrams;
 
 import java.util.*;
 
