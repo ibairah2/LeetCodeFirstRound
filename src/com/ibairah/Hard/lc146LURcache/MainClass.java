@@ -1,4 +1,4 @@
-package com.ibairah.Hard.lc45JumpGameII.lc146LRUCache;
+package com.ibairah.Hard.lc146LURcache;
 
 /**
  * Created by ibairah on 6/16/20.
