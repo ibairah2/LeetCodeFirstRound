@@ -1,5 +1,8 @@
 package com.ibairah.Medium.lc210CourseScheduleII;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * Created by ibairah on 6/17/20.
  *
@@ -46,9 +49,43 @@ package com.ibairah.Medium.lc210CourseScheduleII;
 
 class Solution {
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        int[] res = new int[0];
-        return res;
+
+        // 1. initialize
+        int[] indegree = new int[numCourses];
+        int[] res = new int[numCourses];
+        int k = 0;
+
+        //2. fill indegree requirments
+        for(int[] pair: prerequisites){
+            indegree[pair[0]]++;
+        }
+
+        //3. fill queue with non-prerequisites courses
+        Queue<Integer> queue = new LinkedList<Integer>();
+        for(int i = 0; i < indegree.length; i++){
+            if(indegree[i] == 0){
+                queue.offer(i);
+                res[k++] = i;  // 添加无先修课程到res
+            }
+        }
+
+        //4. BFS
+        while(!queue.isEmpty()){
+            int pre = queue.poll();
+            for(int[] pair:prerequisites ){
+                if(pair[1] == pre){
+                    indegree[pair[0]]--;
+                    if(indegree[pair[0]] == 0){
+                        queue.offer(pair[0]);
+                        res[k++] = pair[0];
+                    }
+                }
+            }
+        }
+
+        return (k == numCourses) ? res : new int[0];
     }
 }
+
 public class MainClass {
 }

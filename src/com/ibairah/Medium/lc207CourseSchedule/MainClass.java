@@ -1,5 +1,9 @@
 package com.ibairah.Medium.lc207CourseSchedule;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * Created by ibairah on 6/17/20.
  * There are a total of numCourses courses you have to take,
@@ -43,6 +47,54 @@ package com.ibairah.Medium.lc207CourseSchedule;
 
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
+        int[] indegree = new int[numCourses]; //创建nums个课程，比如0-7个课程
+        int res = numCourses;
+
+        for(int[] pair : prerequisites){
+
+            // [1,0] => 0->1    // pair[0] -> 1;
+            indegree[pair[0]]++; // indegree[1]++; --> 1需要的前置课程+1
+
+            System.out.println("pair: "+ Arrays.toString(pair));
+            System.out.println("indegree: "+ Arrays.toString(indegree));
+
+        }
+
+        Queue<Integer> queue = new LinkedList<>();
+
+        // 把不需要前置课程的课放入queue中
+        for(int i = 0; i < indegree.length; i++){
+            if(indegree[i] == 0){
+                queue.offer(i);
+            }
+        }
+
+        //BFS
+        while(!queue.isEmpty()){
+            int curr = queue.poll();
+
+            for(int[] pair : prerequisites){
+                if(indegree[pair[0]] == 0){
+                    continue;
+                }
+
+                if(pair[1] == curr){
+                    indegree[pair[0]] --;
+                }
+
+                if(indegree[pair[0]] == 0){
+                    queue.offer(pair[0]);
+                }
+            }
+        }
+
+        // recheck if possible
+        for(int i = 0; i< numCourses; i++){
+            if(indegree[i] != 0){
+                return false;
+            }
+        }
+
         return true;
     }
 }
