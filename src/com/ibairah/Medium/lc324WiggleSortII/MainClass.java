@@ -23,41 +23,33 @@ import java.util.Arrays;
  * Can you do it in O(n) time and/or in-place with O(1) extra space?
  */
 
+//解法：思路：
+//排序，找中位数
+//大于中位数： 从左往右放入，放在奇数位indices
+//小于中位数： 从右往左放入，放在偶数位indices
+//中位数最后放入
+
+// 1，2，3，4，5，6 median = 3
+// 3，6，2，6，1，4
+// 0，1，2，3，4，5 =》 indices
 class Solution {
     public void wiggleSort(int[] nums) {
         Arrays.sort(nums);
-        System.out.println("length  :"+ nums.length);
-        int[] smallSet = new int[nums.length/2];
-        int[] bigSet = new int[nums.length/2];
-        int[] res =  new int[nums.length];
-        for(int i = 0 ; i < nums.length/2; i++){
-            smallSet[i] = nums[i];
-        }
+        int n = nums.length;          //ex:6
+        int mid = (n-1) / 2;         //ex: (6-1)/2  = 5/2 => mid = 2
         int idx = 0;
-        for(int i = nums.length/2 ; i < nums.length ; i++){
-            bigSet[idx] = nums[i];
-            idx++;
+        int[] temp = new int[n];
+        for(int i = 0; i<= mid; i++){
+            temp[idx] = nums[mid-i];         //temp[0] = nums[2-0]; => temp[0] = 3
+            if(idx + 1 < n){                // 0 + 1 < 6
+                temp[idx + 1] = nums[n - 1 - i]; // temp[1] = nums[6-1-0] =>temp[1] = 6; //[n - 1 - i]不断往前遍历
+            }
+            idx += 2;     //+2是因为每次都更新了两个位置
         }
-        System.out.println(" smallSet :"+ Arrays.toString(smallSet));
-        System.out.println(" bigSet :"+ Arrays.toString(bigSet));
-
-        int small_idx = 0;
-        for( int i = 0; i < nums.length; i+=2 ){
-            res[i] = smallSet[small_idx];
-            small_idx++;
-        }
-        System.out.println(" res :"+ Arrays.toString(res));
-
-        small_idx = 0;
-        for( int i = 1; i <= nums.length; i+=2 ) {
-            res[i] = bigSet[small_idx];
-            small_idx++;
-        }
-
-        nums = res.clone();
-        System.out.println("nums :"+ Arrays.toString(nums));
+        System.arraycopy(temp,0,nums,0,n);
     }
 }
+
 
 public class MainClass {
     public static void main(String[] args) {
