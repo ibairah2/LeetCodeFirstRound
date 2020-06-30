@@ -36,5 +36,33 @@ package com.ibairah.Medium.lc62UniquePaths;
  * It's guaranteed that the answer will be less than or equal to 2
  * * 10 ^ 9.
  */
+
+class Solution {
+    public int uniquePaths(int m, int n) {
+        int[][] dp = new int[m][n];
+
+        //initial将第一行和第一列设置为1
+        for(int i = 0; i < m; i++){
+            dp[i][0] = 1;
+        }
+
+        for(int i = 0; i < n; i++){
+            dp[0][i] = 1;
+        }
+
+        //状态转移方程
+        //dp[i][j] = dp[i-1][j]+dp[i][j-1];
+        //除开第一行和第一列的，每个空格的可能性 =  上面格子的值 + 左边格子的值
+        for(int i = 1; i < m; i++){
+            for(int j = 1; j < n; j++){
+                dp[i][j] = dp[i-1][j]+dp[i][j-1];
+            }
+        }
+
+        // -1 为了indices
+        return dp[m-1][n-1];
+    }
+}
+
 public class MainClass {
 }
