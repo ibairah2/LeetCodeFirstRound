@@ -31,7 +31,7 @@ class Solution {
 
         for(int i = 0 ; i < c.length; i++){
             //判断数字的大小
-            for(int j = 9; j > c[i] - '0' ; j--){
+            for(int j = bucket.length-1; j > c[i] - '0' ; j--){
                 //看是否出现过，并且在当前i的后面
                 if(bucket[j] > i){
                     swap(c,bucket[j],i);
