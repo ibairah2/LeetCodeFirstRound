@@ -79,7 +79,7 @@ class Solution {
 
         int[] res = new int[n];
         for(String log : logs){
-            Task task = new Task(log.split("\\:"));
+            Task task = new Task(log.split(":"));
             if(task.isStart){
                 stack.push(task);
             }else{

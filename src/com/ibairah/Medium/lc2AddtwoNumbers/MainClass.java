@@ -21,7 +21,42 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+
+// 自己的办法，高速
 class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(0);
+        ListNode head = dummy;
+
+        int carry = 0;
+
+        while(l1 != null || l2!= null){
+            ListNode cur = new ListNode(0);
+            if(l1 != null ){
+                carry += l1.val;
+                l1 = l1.next;
+            }
+            if(l2 != null ){
+                carry += l2.val;
+                l2 = l2.next;
+            }
+            cur.val = carry % 10;
+            carry /= 10;
+            // 连接到新的dummy node上
+            dummy.next = cur;
+            dummy = cur;
+        }
+
+        if(carry != 0){
+            ListNode cur = new ListNode(0);
+            cur.val = carry;
+            dummy.next= cur;
+        }
+        return head.next;
+    }
+}
+
+class Solution2 {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode dummy = new ListNode(0);
         ListNode head = dummy;

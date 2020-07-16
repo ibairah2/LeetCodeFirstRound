@@ -21,25 +21,25 @@ package com.ibairah.Easy.lc680ValidPalindromeII;
 
 class Solution {
     public boolean validPalindrome(String s) {
-
-        for(int i = 0; i < s.length(); i++){
-            s = s.substring(i);
+        int i = 0, j = s.length() - 1;
+        while(i <= j){
+            // 如果出现不等，则再给一次机会，尝试左边删除一个，或者右边删除一个
+            if(s.charAt(i) != s.charAt(j)){
+                return helper(s,i+1,j)  || helper(s,i,j-1);
+            }
+            i++;
+            j--;
         }
-        return isPalidram(s);
+        return true;
     }
 
-    private boolean isPalidram(String s){
-        char[] c = s.toCharArray();
-        int pointerA = 0;
-        int pointerB = s.length();
-
-        while(pointerA < pointerB){
-            if(c[pointerA] == c[pointerB]){
-                pointerA++;
-                pointerB--;
-            }else{
+    private boolean helper(String s, int i, int j){
+        while(i <= j){
+            if(s.charAt(i) != s.charAt(j)){
                 return false;
             }
+            i++;
+            j--;
         }
         return true;
     }
